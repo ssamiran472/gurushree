@@ -1,0 +1,106 @@
+{% extends 'admin_layout.html' %} {% load static %}{% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Hospitals Master</h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <form id="departmentForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card-header">
+                                <i class="fa fa-building"></i> Primary Details
+                            </div>
+                            <input type="hidden" id="deptId">
+                            <div class="p-3">
+                                <div class="form-group">
+                                    <label for="Name">Hospital  name</label>
+                                    <input type="text" class="form-control" id="deptName" placeholder="Enter State Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name">Hospital Shortname</label>
+                                    <input type="text" class="form-control" id="deptName" placeholder="Enter State Name" required>
+                                </div>
+                                <div class="card-header">
+                                    <i class="fa fa-image"></i> Logo (Optional)
+                                </div>
+                                <div class="row">
+
+                                    <div class="form-group col-md-6">
+                                        <div class="wrap-custom-file">
+                                            <input type="file" name="image1" id="image1" accept=".gif, .jpg, .png" />
+                                            <label for="image1">
+                                       <span>Select Logo One</span>
+                                       <i class="fa fa-plus-circle"></i>
+                                     </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <div class="wrap-custom-file">
+                                            <input type="file" name="image2" id="image2" accept=".gif, .jpg, .png" />
+                                            <label for="image2">
+                                         <span>Select Logo Two</span>
+                                          <i class="fa fa-plus-circle"></i>
+                                         </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="checkbox" name="isActive" id="dIsActive">
+                                    <label for="dIsActive"> is Active?</label>
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-header">
+                                <i class="fa fa-phone"></i> Contact Details
+                            </div>
+                            <div class="p-3">
+                                <div class="form-group">
+                                    <label for="Name">Phone Number</label>
+                                    <input type="text" class="form-control" id="deptName" placeholder="Enter State Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name">FAX</label>
+                                    <input type="text" class="form-control" id="deptName" placeholder="Enter State Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name">Address 1</label>
+                                    <textarea name="address1" id="address1" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name">Address 2</label>
+                                    <textarea name="address1" id="address1" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Name">Pincode</label>
+                                    <input type="text" class="form-control" id="deptName" placeholder="Enter State Name" required>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-info float-right">
+                    <i class="fa fa-tasks"></i>
+                    List Hospitals
+                </button>
+                <button class="btn btn-primary float-right mr-2">
+                    Add Hospital
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}{% block scripts %}{% endblock %}

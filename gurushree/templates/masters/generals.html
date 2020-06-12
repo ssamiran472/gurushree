@@ -1,0 +1,149 @@
+{% extends 'admin_layout.html' %} {% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">General Master</h1>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <form id="generaltypeForm">
+                    <div class="row">
+                        <input type="hidden" id="genID">
+                        <div class="form-group col-md-3">
+                            <label for="Name">General Type</label>
+                            <input type="text" id="gentype" class="form-control">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="Name">General Value</label>
+                            <input type="text" id="genvalue" class="form-control">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="Name">is Active?</label>
+                            <div class="input-group">
+                                <input type="checkbox" class="form-check" id="dIsActive">
+                                <span class="input-group-btn">
+                                                      <input type="submit" class="btn btn-primary ml-5" id="submitBtn" value="Add General">
+                                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-md-12 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="generaltype" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>General Type</th>
+                                <th>General Value</th>
+                                <th>is Active?</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block scripts%}
+<script> 
+    $(document).ready(function() {
+        var table = $("#generaltype").DataTable({
+            ajax: {
+                url: '/api/masters/generalTypes',
+                dataSrc: ""
+            },
+            columns: [{
+                data: 'genType'
+            }, {
+                data: 'genValue'
+            }, {
+                data: 'isActive',
+                render: function(data) {
+                    if (data == true)
+                        return '<span class="badge badge-success">Active</span>'
+                    else
+                        return '<span class="badge badge-danger">Inactive</span>'
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return '<button type="button" class="btn btn-primary btn-sm editGeneraltype" data-genType=' + row.genType + ' data-genValue=' + row.genValue + ' data-isactive=' + row.isActive + ' data-genType-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteGeneraltype" data-genType-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                }
+            }]
+        })
+        $("#generaltype").on('click', '.editGeneraltype', function() {
+            var button = $(this);
+            $('#gentype').val(button.attr('data-genType'))
+            $('#genvalue').val(button.attr('data-genValue'))
+            $('#dIsActive').prop('checked', button.attr('data-isactive'))
+            $('#genID').val(button.attr('data-genType-id'))
+            $('#submitBtn').val('Update General Type');
+        })
+        $("#generaltype").on('click', '.deleteGeneraltype', function() {
+            var button = $(this);
+            $.ajax({
+                url: '/api/masters/generalTypes/' + button.attr('data-genType-id') + '/',
+                method: 'DELETE',
+                success: function(data) {
+                    table.ajax.reload()
+                    toastr.success('Genearl Type Deleted Successfully', 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                },
+                error: function(err) {
+                    toastr.error('General Type failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                }
+            })
+        })
+        $('#generaltypeForm').submit(function(e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            if ($('#generaltypeForm').valid()) {
+                var data = {
+                    genType: $('#gentype').val(),
+                    genValue: $('#genvalue').val(),
+                    isActive: $('#dIsActive').prop('checked') == true
+                }
+                var btnText = $('#submitBtn').val();
+                var method = 'POST';
+                var url = '/api/masters/generalTypes/'
+                var succesMessage = 'General Type Added Successully '
+                if (btnText == 'Update General Type') {
+                    method = 'PUT';
+                    url = `/api/masters/generalTypes/${$('#genID').val()}/ `
+                    succesMessage = 'General Type Updated Successfully'
+                }
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(data),
+                    method: method,
+                    contentType: 'application/json'
+                }).done(function(data) {
+                    table.ajax.reload()
+                    $('#generaltypeForm').trigger('reset')
+                    $('#submitBtn').val('Add General Type');
+                    toastr.success(succesMessage, 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+        s        }).fail((err) => {
+                    console.log(err)
+                    toastr.error('Operation failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                })
+            }
+        })
+    })
+</script>
+{%endblock%}

@@ -1,0 +1,520 @@
+{% extends 'admin_layout.html' %} {% block content %}
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Places Master</h1>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#States" role="tab" aria-controls="nav-home" aria-selected="true">States</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#Cities" role="tab" aria-controls="nav-profile" aria-selected="false">Cities</a>
+                <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#Areas" role="tab" aria-controls="nav-home" aria-selected="true">Areas</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="States" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <form id="StateForm">
+                                    <div class="row">
+                                        <input type="hidden" id="stateId">
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">State</label>
+                                            <input type="text" class="form-control" id="stateName" placeholder="Enter State Name" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="Name">is Active?</label>
+                                            <div class="input-group">
+                                                <input type="checkbox" class="form-check" id="sIsActive">
+                                                <span class="input-group-btn">
+                                                      <input type="submit" class="btn btn-primary ml-5" id="submitState" value="Add State">
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="StatesTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>State</th>
+                                                <th>is Active?</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Cities" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <form id="CityForm">
+                                    <input type="hidden" id="cityId">
+                                    <div class="row">
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">State</label>
+                                            <select id="cState" class="form-control" name="cState" required>
+                                                <option value="">Select State</option>
+                
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">City</label>
+                                            <input type="text" class="form-control" id="cName" placeholder="Enter City Name" name="sName" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">is Active?</label>
+                                            <div class="input-group">
+                                                <input type="checkbox" class="form-check" id="cIsActive">
+                                                <span class="input-group-btn">
+                                                      <input type="submit" class="btn btn-primary ml-5" id="submitCity" value="Add Sub Department">
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="CitiesTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>State</th>
+                                                <th>City</th>
+                                                <th>is Active?</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Areas" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <form id="AreaForm">
+                                    <div class="row">
+                                        <input type="hidden" id="areaId">
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">City</label>
+                                            <select class="form-control" id="citiesCombo">
+                                                <option value="">Select City</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">Area</label>
+                                            <input type="text" class="form-control" id="aName" placeholder="Enter Area Name" name="sName" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">Pincode</label>
+                                            <input type="text" class="form-control" id="pincode" placeholder="Enter Pincode" name="sName" required>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="Name">is Active?</label>
+                                            <div class="input-group">
+                                                <input type="checkbox" class="form-check" id="aIsActive">
+                                                <span class="input-group-btn">
+                                                      <input type="submit" class="btn btn-primary ml-5" id="submitArea.................................................................................................................................................................................................................................................................................................." value="Add Department">
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- Earnings (Monthly) Card Example -->
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-primary shadow h-100 py-2">
+
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="AreasTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>City</th>
+                                                <th>Area</th>
+                                                <th>is Active?</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}{% block scripts %}
+<script>
+    //States
+    $(document).ready(function() {
+        var table = $('#StatesTable').DataTable({
+            ajax: {
+                url: '/api/masters/states/',
+                dataSrc: ""
+            },
+            columns: [{
+                data: 'name'
+            }, {
+                data: 'isActive',
+                render: function(data) {
+                    if (data == true)
+                        return '<span class="badge badge-success">Active</span>'
+                    else
+                        return '<span class="badge badge-danger">Inactive</span>'
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return '<button type="button" class="btn btn-primary btn-sm edit" data-state="' + row.name + '" data-isactive=' + row.isActive + ' data-state-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-state-id="' + data + '"><i class="fas fa-trash"></i></button>'
+
+                }
+            }]
+        })
+
+
+        $('#StatesTable').on('click', '.edit', function() {
+            var button = $(this);
+            $('#cName').val(button.attr('data-state'))
+            $('#cityId').val(button.attr('data-state-id'))
+            $('#sIsActive').prop('checked', button.attr('data-isactive') == 'true')
+            $('#submitState').val('Update State')
+        })
+
+
+        $("#StatesTable").on('click', '.delete', function() {
+            var button = $(this);
+            $.ajax({
+                url: '/api/masters/states/' + button.attr('data-state-id') + '/',
+                method: 'DELETE',
+                success: function(data) {
+                    table.ajax.reload()
+                    toastr.success('State Deleted Successfully', 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                },
+                error: function(err) {
+                    toastr.error('State Deletion failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                }
+            })
+        })
+
+
+        $('#StateForm').submit(function(e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            if ($('#StateForm').valid()) {
+                var data = {
+                    name: $('#stateName').val(),
+                    isActive: $('#sIsActive').prop('checked') == true
+                }
+                var btnText = $('#submitState').val();
+                var method = 'POST';
+                var url = '/api/masters/states/'
+                var succesMessage = 'Depratment Added Successully '
+                if (btnText == 'Update State') {
+                    method = 'PUT';
+                    url = `/api/masters/states/${$('#stateId').val()}/ `
+                    succesMessage = 'State Updated Successfully'
+                }
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(data),
+                    method: method,
+                    contentType: 'application/json'
+                }).done(function(data) {
+                    table.ajax.reload()
+                    $('#StateForm').trigger('reset')
+                    $('#submitState').val('Add State');
+                    toastr.success(succesMessage, 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                }).fail((err) => {
+                    console.log(err)
+                    toastr.error('Operation failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                })
+            }
+        })
+    })
+</script>
+<script>
+    //Cities
+    $(document).ready(function() {
+        //Loading the Table
+        $('#CitiesTable').DataTable({
+            ajax: {
+                url: '/api/masters/citieslist/',
+                dataSrc: ""
+            },
+            columns: [{
+                data: 'state.name'
+            }, {
+                data: 'name'
+            }, {
+                data: 'isActive',
+                render: function(data) {
+                    if (data == true)
+                        return '<span class="badge badge-success">Active</span>'
+                    else
+                        return '<span class="badge badge-danger">Inactive</span>'
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return '<button type="button" class="btn btn-primary btn-sm edit" data-state="' + row.state.name + '" data-city="' + row.name + '" data-isactive=' + row.isActive + ' data-city-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-city-id="' + data + '"><i class="fas fa-trash"></i></button>'
+
+                }
+            }]
+        })
+
+        $('#CitiesTable').on('click', '.edit', function() {
+            var button = $(this);
+            $('#cState').val(button.attr('data-state'))
+            $('#cName').val(button.attr('data-city'))
+            $('#cityId').val(button.attr('data-city-id'))
+            $('#cIsActive').prop('checked', button.attr('data-isactive') == 'true')
+            $('#submitCity').val('Update City')
+        })
+
+
+        $("#CitiesTable").on('click', '.delete', function() {
+            var button = $(this);
+            $.ajax({
+                url: '/api/masters/cities/' + button.attr('data-city-id') + '/',
+                method: 'DELETE',
+                success: function(data) {
+                    table.ajax.reload()
+                    toastr.success('City Deleted Successfully', 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                },
+                error: function(err) {
+                    toastr.error('City Deletion failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                }
+            })
+        })
+
+
+        $('#CityForm').submit(function(e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            if ($('#CityForm').valid()) {
+                var data = {
+                    state: $('#cState').val(),
+                    name: $('#cityName').val(),
+                    isActive: $('#cIsActive').prop('checked') == true
+                }
+                var btnText = $('#submitState').val();
+                var method = 'POST';
+                var url = '/api/masters/cities/'
+                var succesMessage = 'Depratment Added Successully '
+                if (btnText == 'Update City') {
+                    method = 'PUT';
+                    url = `/api/masters/cities/${$('#cityId').val()}/ `
+                    succesMessage = 'City Updated Successfully'
+                }
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(data),
+                    method: method,
+                    contentType: 'application/json'
+                }).done(function(data) {
+                    table.ajax.reload()
+                    $('#StateForm').trigger('reset')
+                    $('#submitState').val('Add City');
+                    toastr.success(succesMessage, 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                }).fail((err) => {
+                    console.log(err)
+                    toastr.error('Operation failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                })
+            }
+        })
+    })
+</script>
+<script>
+    //Areas
+    $(document).ready(function() {
+        //Loading the Table
+        $('#AreasTable').DataTable({
+            ajax: {
+                url: '/api/masters/areas/',
+                dataSrc: ""
+            },
+            columns: [{
+                data: 'city'
+            }, {
+                data: 'name'
+            }, {
+                data: 'pincode'
+            }, {
+                data: 'isActive',
+                render: function(data) {
+                    if (data == true)
+                        return '<span class="badge badge-success">Active</span>'
+                    else
+                        return '<span class="badge badge-danger">Inactive</span>'
+                }
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return '<button type="button" class="btn btn-primary btn-sm edit" data-city="' + row.city + '" data-area="' + row.name + '" data-pincode="' + row.pincode + '" data-isactive=' + row.isActive + ' data-area-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-state-id="' + data + '"><i class="fas fa-trash"></i></button>'
+
+                }
+            }]
+        })
+
+        //Loading The Dropdown
+        $.getJSON('/api/masters/citieslist/', {}, function(data) {
+            if (data) {
+                var cities = '<option value="">Select City</option>'
+                $.each(data, function(i, item) {
+                    cities += `<option value="${item.name},${item.state.name}">${item.name},${item.state.name}</option>`
+                })
+                $('#citiesCombo').html(cities)
+            }
+        })
+
+        $('#AreasTable').on('click', '.edit', function() {
+            var button = $(this);
+            $('#citiesCombo').val(button.attr('data-city'))
+            $('#aName').val(button.attr('data-area'))
+            $('#pincode').val(button.attr('data-pincode'))
+            $('#areaId').val(button.attr('data-city-id'))
+            $('#aIsActive').prop('checked', button.attr('data-isactive') == 'true')
+            $('#submitArea').val('Update Area')
+        })
+
+
+        $("#AreasTable").on('click', '.delete', function() {
+            var button = $(this);
+            $.ajax({
+                url: '/api/masters/areas/' + button.attr('data-area-id') + '/',
+                method: 'DELETE',
+                success: function(data) {
+                    table.ajax.reload()
+                    toastr.success('Area Deleted Successfully', 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                },
+                error: function(err) {
+                    toastr.error('Area Deletion failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                }
+            })
+        })
+
+
+        $('#AreaForm').submit(function(e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+            if ($('#AreaForm').valid()) {
+                var data = {
+                    city: $('#citiesCombo').val(),
+                    name: $('#aName').val(),
+                    pincode: $('#pincode').val(),
+                    isActive: $('#aIsActive').prop('checked') == true
+                }
+                var btnText = $('#submitArea').val();
+                var method = 'POST';
+                var url = '/api/masters/areas/'
+                var succesMessage = 'Area Added Successully '
+                if (btnText == 'Update Area') {
+                    method = 'PUT';
+                    url = `/api/masters/areas/${$('#areaId').val()}/ `
+                    succesMessage = 'Area Updated Successfully'
+                }
+                $.ajax({
+                    url: url,
+                    data: JSON.stringify(data),
+                    method: method,
+                    contentType: 'application/json'
+                }).done(function(data) {
+                    table.ajax.reload()
+                    $('#AreaForm').trigger('reset')
+                    $('#submitArea').val('Add Area');
+                    toastr.success(succesMessage, 'Success', {
+                        positionClass: "toast-top-center"
+                    })
+                }).fail((err) => {
+                    console.log(err)
+                    toastr.error('Operation failed', 'Error', {
+                        positionClass: "toast-top-center"
+                    })
+                })
+            }
+        })
+    })
+</script>{% endblock %}
