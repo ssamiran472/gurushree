@@ -113,7 +113,7 @@ class income_expenses(models.Model):
 
 
 class hospital(models.Model):
-    hospitalName = models.CharField(max_length=32, null=True)
+    hospitalName = models.CharField(max_length=100, null=True)
     address1 = models.CharField(max_length=32, null=True)
     address2 = models.CharField(max_length=32, null=True)
     shortName = models.CharField(max_length=32, null=True)
@@ -137,7 +137,7 @@ class professional(models.Model):
     professionalName = models.CharField(max_length=32, null=True)
     qualification = models.CharField(max_length=32, null=True)
     designation = models.CharField(max_length=32, null=True)
-    deptId = models.IntegerField(null=True)
+    department = models.CharField(max_length=32,null=True)
     category = models.CharField(max_length=32, null=True)
     OPNewVisit = models.IntegerField(null=True)
     OPRevisit = models.IntegerField(null=True)
@@ -233,3 +233,15 @@ class Area(models.Model):
 
     def __str__(self):
         return self.city+','+self.name
+
+class GenType(models.Model):
+    name=models.CharField(max_length=32)
+    isActive = models.BooleanField()
+    addedBY = models.CharField(max_length=32, null=True)
+    addeddate = models.DateTimeField(auto_now_add=True)
+    editedby = models.CharField(max_length=32, null=True)
+    editeddate = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+

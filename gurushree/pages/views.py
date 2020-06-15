@@ -51,3 +51,6 @@ def users(request):
 
 def professionals(request):
     return render(request, 'masters/professionals.html')
+
+def genTypes(request):
+    return render(request,'masters/genTypes.html')

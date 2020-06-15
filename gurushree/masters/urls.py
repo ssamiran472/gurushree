@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .api import DepartmentViewSet, CitiesListViewSet, StateViewSet, CityViewSet, AreaViewSet, SubDepartmentViewSet, GeneralTypeViewSet, registrationTypeViewSet, discounTypeViewSet, userViewSet, income_expensesViewSet, hospitalViewSet, professionalViewSet, menuViewSet, pagemasterViewSet
+from .api import GenTypeViewSet, SubdepartmentsListViewSet, DepartmentViewSet, CitiesListViewSet, StateViewSet, CityViewSet, AreaViewSet, SubDepartmentViewSet, GeneralTypeViewSet, registrationTypeViewSet, discounTypeViewSet, userViewSet, income_expensesViewSet, hospitalViewSet, professionalViewSet, menuViewSet, pagemasterViewSet
 
 router = routers.DefaultRouter()
 router.register('departments', DepartmentViewSet, 'departments')
@@ -17,5 +17,7 @@ router.register('states', StateViewSet, 'states')
 router.register('cities', CityViewSet, 'cities')
 router.register('areas', AreaViewSet, 'areas')
 router.register('citieslist', CitiesListViewSet, 'citieslist')
+router.register('subdepartmentsList', SubdepartmentsListViewSet, 'subdepartmentsList')
+router.register('gentypes', GenTypeViewSet, 'gentypes')
 
 urlpatterns = router.urls

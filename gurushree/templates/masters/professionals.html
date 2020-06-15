@@ -3,152 +3,325 @@
     <h1 class="h3 mb-0 text-gray-800">Professional Master</h1>
 </div>
 <div class="row">
-    <div class="col-xl-12 col-md-12 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
-            <div class="card-body">
-                <form id="departmentForm">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="hidden" id="deptId">
-                            <div class="p-3">
-                                <div class="form-group">
-                                    <label for="Name">Professional Title</label>
-                                    <select name="" id="" class="form-control">
+    <div class="col-md-12">
+        <nav>
+            <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">Professionals Form</a>
+                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Professionals List</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="Form" role="tabpanel" aria-labelledby="nav-home-tab">
+
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 mb-4">
+                        <div class="card border-left-danger shadow h-100 py-2">
+                            <form id="ProfessionalForm">
+                                <div class="card-body">
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="hidden" id="deptId">
+                                            <div class="p-3">
+                                                <div class="form-group">
+                                                    <label for="Name">Professional Title</label>
+                                                    <select id="TitleCombo" name="title" class="form-control">
                                         <option value="">Select Professional Title</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Professional Name</label>
-                                    <input type="text" class="form-control" id="deptName" placeholder="" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Designation</label>
-                                    <input type="text" class="form-control" id="deptName" placeholder="" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Qualification</label>
-                                    <input type="text" class="form-control" id="deptName" placeholder="" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Department</label>
-                                    <select name="" id="" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Name">Professional Name</label>
+                                                    <input type="text" class="form-control" id="professionalName" name="professionalName" placeholder="Enter Professional Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Name">Designation</label>
+                                                    <input type="text" class="form-control" id="designation" name="designation" placeholder="Enter Professional Designation" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Name">Qualification</label>
+                                                    <input type="text" class="form-control" id="qualification" name="qualification" placeholder="Enter Professional Qualification" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Name">Department</label>
+                                                    <select name="department" id="DepartmentCombo" class="form-control">
                                         <option value="">Select Department</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="Name">Category</label><br>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="Category">C
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Name">Category</label><br>
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="category">C
                                         </label>
-                                    </div>
-                                    <div class="form-check-inline">
-                                        <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="Category">R
+                                                    </div>
+                                                    <div class="form-check-inline">
+                                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="category">R
                                         </label>
-                                    </div>
-                                    <div class="form-check-inline disabled">
-                                        <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="Category">D
+                                                    </div>
+                                                    <div class="form-check-inline disabled">
+                                                        <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="category">D
                                         </label>
-                                    </div>
-                                </div>
+                                                    </div>
+                                                </div>
 
-                            </div>
+                                            </div>
 
+                                        </div>
+
+                                        <div class=" col-md-4 ">
+                                            <div class="p-3 ">
+                                                <div class="form-group ">
+                                                    <label for="Name ">OP New Visit</label>
+                                                    <input type="number" class="form-control" id="OPNewVisit" name="OPNewVisit" placeholder="Enter OP New Visit" required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">OP Revisit</label>
+                                                    <input type="number " class="form-control " id="OPRevisit" name="OPRevisit" ceholder=" " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">OP Followup</label>
+                                                    <input type="number " class="form-control " id="OPfollowup" name="OPfollowup" placeholder=" " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">OP Share(%)</label>
+                                                    <input type="number " class="form-control " id="OPShare" name="OPShare" placeholder=" " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">OP Share Amount</label>
+                                                    <input type="number " class="form-control " id="OPShareamount" name="OPShareamount" placeholder=" " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">IP Share(%)</label>
+                                                    <input type="number " class="form-control " id="IPShare" name="IPShare" placeholder=" " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">IP Share Amount</label>
+                                                    <input type="number " class="form-control " id="IPShareamount" name="IPShareamount" placeholder=" " required>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 ">
+                                            <div class="p-3 ">
+                                                <div class="form-group ">
+                                                    <label for="Name ">Licence Number</label>
+                                                    <input type="text " class="form-control " id="licenceNo" name="licenceNo" placeholder="Enter License Number " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">Contact Number</label>
+                                                    <input type="text " class="form-control " id="contactNo" placeholder="Enter Contact Number " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">Email</label>
+                                                    <input type="email " class="form-control " id="email" name="email" placeholder="Enter Email Address " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name">Hospital Name</label>
+                                                    <input type="text" class="form-control " id="hospitalName" name="hospitalName" placeholder="Enter Hospital Name " required>
+
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">Priority</label>
+                                                    <input type="text " class="form-control " id="priority" name="priority" placeholder="Enter Priority Value " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label for="Name ">Duration (mins)</label>
+                                                    <input type="text " class="form-control " id="duration" name="duration" placeholder="Enter Duation in Mins " required>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label class="check-container">
+                                                        <input type="checkbox" id="appointment" name="appointment"> Appointment
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label class="check-container">
+                                                        <input type="checkbox" id="token" name="token"> Token
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group ">
+                                                    <label class="check-container">
+                                                        <input type="checkbox" id="isActive" name="isActive"> is Active?
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="card-footer ">
+                                    <div class="mt-5 ">
+                                        <button class=" btn btn-info float-right ">
+                                         <i class="fa fa-tasks "></i> List Professionals
+                                    </button>
+                                        <button class="btn btn-danger float-right mr-2 ">
+                                                Add Professional
+                                            </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+                    </div>
 
-                        <div class=" col-md-4 ">
-                            <div class="p-3 ">
-                                <div class="form-group ">
-                                    <label for="Name ">OP New Visit</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">OP Revisit</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">OP Followup</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">OP Share(%)</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">OP Share Amount</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">IP Share(%)</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">IP Share Amount</label>
-                                    <input type="number " class="form-control " id="deptName " placeholder=" " required>
-                                </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="Table" role="tabpanel" aria-labelledby="nav-home-tab ">
 
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 ">
-                            <div class="p-3 ">
-                                <div class="form-group ">
-                                    <label for="Name ">Licence Number</label>
-                                    <input type="text " class="form-control " id="deptName " placeholder="Enter State Name " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">Contact Number</label>
-                                    <input type="text " class="form-control " id="deptName " placeholder="Enter State Name " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">Email</label>
-                                    <input type="email " class="form-control " id="deptName " placeholder="Enter State Name " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name">Hospital Name</label>
-                                    <input type="text" class="form-control " id="deptName " placeholder="Enter State Name " required>
-
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">Priority</label>
-                                    <input type="text " class="form-control " id="deptName " placeholder="Enter State Name " required>
-                                </div>
-                                <div class="form-group ">
-                                    <label for="Name ">Duration (mins)</label>
-                                    <input type="text " class="form-control " id="deptName " placeholder="Enter State Name " required>
-                                </div>
-                                <div class="form-group ">
-                                    <input type="checkbox" name="isActive " id="dIsActive ">
-                                    <label for="dIsActive "> Appointment</label>
-                                </div>
-                                <div class="form-group ">
-                                    <input type="checkbox" name="isActive " id="dIsActive ">
-                                    <label for="dIsActive "> Token</label>
-                                </div>
-                                <div class="form-group ">
-                                    <input type="checkbox" name=" isActive " id="dIsActive ">
-                                    <label for="dIsActive "> is Active?</label>
-                                </div>
+                <div class="row ">
+                    <div class="col-xl-12 col-md-12 mb-4 ">
+                        <div class="card border-left-danger shadow h-100 py-2 ">
+                            <div class="card-body ">
+                                <table class="table table-bordered table-hover" style="width:100%" id="ProfessionalTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Professional Name</th>
+                                            <th>Contact Number</th>
+                                            <th>Email</th>
+                                            <th>Hospital Name</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="card-footer ">
-                <div class="mt-5 ">
-                    <button class=" btn btn-info float-right ">
-                                         <i class="fa fa-tasks "></i> List Professionals
-                                    </button>
-                    <button class="btn btn-primary float-right mr-2 ">
-                                                Add Professional
-                                            </button>
+
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+{% endblock %}{% block scripts %}
+<script>
+    $(document).ready(function() {
+        $.getJSON('/api/masters/generalTypes/?gentype=Title', {}, function(data) {
+            var options = "<option value=''>Select Title</option>"
+            $.each(data, function(i, item) {
+                options += `<option value="${item.genValue}">${item.genValue}</option>`
+            })
+            $('#TitleCombo').html(options)
+        })
 
-{% endblock %}{% block scripts %}{% endblock %}
+        $.getJSON('/api/masters/subdepartmentsList/', {}, function(data) {
+            var options = "<option value=''>Select Department</option>"
+            $.each(data, function(i, item) {
+                options += `<option value="${item.department.name},${item.subDepartment}">${item.department.name},${item.subDepartment}</option>`
+            })
+            $('#DepartmentCombo').html(options)
+        })
+
+        var table = $('#ProfessionalTable').DataTable({
+            ajax: {
+                url: '/api/masters/professional/',
+                dataSrc: ''
+            },
+            columns: [{
+                data: 'professionalName'
+            }, {
+                data: 'contactNo'
+            }, {
+                data: 'email'
+            }, {
+                data: 'hospitalName'
+            }, {
+                data: 'id',
+                render: function(data, type, row) {
+                    return "<button type='button' class='btn btn-danger btn-sm edit' data-user='" + JSON.stringify(row).replace('"', '\"') + "'><i class='fas fa-edit'></i></button>" +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
+
+                }
+            }]
+        })
+
+        $('#usersTable').on('click', '.edit', function() {
+            var button = $(this)
+            var user = JSON.parse(button.attr('data-user'))
+            formDeserialize(document.getElementById('UserForm'), user)
+            $('#submitUser').html('Update User')
+            $('#userFormTab').trigger('click')
+        })
+
+        function formDeserialize(form, data) {
+            const entries = (new URLSearchParams(data)).entries();
+            for (const [key, val] of entries) {
+                //http://javascript-coder.com/javascript-form/javascript-form-value.phtml
+                const input = form.elements[key];
+                if (input != undefined) {
+                    if (input.type == 'file') {
+                        var $file = $('#' + input.id),
+                            $label = $file.next('label'),
+                            $labelText = $label.find('span'),
+                            labelDefault = $labelText.text();
+                        var filename = val.split('/').pop()
+                        console.log(filename)
+                        if (filename) {
+                            $label
+                                .addClass('file-ok')
+                                .css('background-image', 'url(' + val + ')');
+                            $labelText.text(filename);
+                        } else {
+                            $label.removeClass('file-ok');
+                            $labelText.text(labelDefault);
+                        }
+                    } else {
+
+                        switch (input.type) {
+                            case 'checkbox':
+                                input.checked = !!val;
+                                break;
+                            case 'select-one':
+                                if (val)
+                                    input.value = val;
+                                else
+                                    input.selectedIndex = 0;
+
+                                break;
+                            default:
+                                input.value = val;
+                                break;
+
+                        }
+
+                    }
+                }
+
+            }
+        }
+
+        $('#ProfessionalForm').submit(function(e) {
+            e.preventDefault()
+            e.stopImmediatePropagation()
+
+            var data = new FormData(this)
+
+            $.ajax({
+                url: '/api/masters/professional/',
+                data: data,
+                method: 'POST',
+                contentType: false,
+                processData: false,
+                success: function() {
+                    toastr.success(" Professional Added Successfully", "Success", {
+                        positionClass: 'toast-top-center'
+                    })
+                },
+                error: function(err) {
+                    console.log(err)
+
+                    toastr.error("Professional Adding Failed", "Error", {
+                        positionClass: 'toast-top-center'
+                    })
+                }
+            })
+        })
+
+
+    })
+</script>
+
+{% endblock %}

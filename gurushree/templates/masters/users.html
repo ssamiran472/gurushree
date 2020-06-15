@@ -6,8 +6,8 @@
     <div class="col-md-12">
         <nav>
             <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">User Form</a>
-                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Users List</a>
+                <a class="nav-item nav-link active" id="userFormTab" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">User Form</a>
+                <a class="nav-item nav-link" id="userTableTab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Users List</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -15,15 +15,15 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card border-left-danger shadow h-100 py-2">
                             <div class="card-body">
                                 <form id="UserForm">
+                                    <input type="hidden" name='id'>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="card-header">
                                                 <i class="fa fa-user"></i> Primary Details
                                             </div>
-                                            <input type="hidden" id="deptId">
                                             <div class="p-3">
                                                 <div class="row">
 
@@ -53,23 +53,23 @@
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="Name">Age</label>
-                                                        <input type="numbers" class="form-control" id="age" name="age" placeholder=" " required>
+                                                        <input type="numbers" class="form-control" id="age" name="age" placeholder="" required>
                                                     </div>
-                                                    <div class="form-group col-md-6 ">
-                                                        <label for="Name ">Gender</label>
-                                                        <select name="gender" id="gender" class="form-control ">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="Name">Gender</label>
+                                                        <select name="gender" id="gender" class="form-control">
                                         <option value="">Select Gender</option>
-                                        <option value="Male ">Male</option>
-                                        <option value="Female ">Female</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                                     </div>
-                                                    <div class="form-group col-md-6 ">
+                                                    <div class="form-group col-md-6">
                                                         <label for="Name">Marital Status</label>
-                                                        <select name="marital" id="marital" class="form-control ">
+                                                        <select name="marital" id="marital" class="form-control">
                                         <option value="">Select Status</option>
-                                        <option value="Male ">Single</option>
-                                        <option value="Female ">Married</option>
-                                        <option value="Widow ">Widow</option>
+                                        <option value="Male">Single</option>
+                                        <option value="Female">Married</option>
+                                        <option value="Widow">Widow</option>
                                     </select>
                                                     </div>
                                                 </div>
@@ -79,79 +79,81 @@
 
                                         </div>
 
-                                        <div class="col-md-4 ">
-                                            <div class="card-header ">
-                                                <i class="fa fa-plus "></i> Professional Details
+                                        <div class="col-md-4">
+                                            <div class="card-header">
+                                                <i class="fa fa-plus"></i> Professional Details
                                             </div>
-                                            <div class="p-3 ">
-                                                <div class="form-group ">
-                                                    <label for="Name ">Department</label>
-                                                    <select name="department" class="form-control " id="department">
+                                            <div class="p-3">
+                                                <div class="form-group">
+                                                    <label for="Name">Department</label>
+                                                    <select name="department" class="form-control" id="department">
                                         <option value="">Select Department</option>
                                         <option value="OPD">OPD</option>
                                     </select>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Employee Code</label>
-                                                    <input type="text " class="form-control " id="empCode" name="empCode" placeholder="Enter Employee Code" required>
+                                                <div class="form-group">
+                                                    <label for="Name">Employee Code</label>
+                                                    <input type="text" class="form-control" id="empCode" name="empCode" placeholder="Enter Employee Code" required>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">User Type</label>
-                                                    <select name="user" class="form-control " id="user">
+                                                <div class="form-group">
+                                                    <label for="Name">User Type</label>
+                                                    <select name="user" class="form-control" id="user">
                                         <option value="">Select User Type</option>
+                                        <option value="Admin">Admin</option>
                                     </select>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Couter</label>
-                                                    <input type="text" class="form-control " id="counter" name="counter" placeholder="Enter Counter " required>
+                                                <div class="form-group">
+                                                    <label for="Name">Couter</label>
+                                                    <input type="text" class="form-control" id="counter" name="counter" placeholder="Enter Counter" required>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Relation Type</label>
-                                                    <select name="relationtype" class="form-control " id="relationtype">
+                                                <div class="form-group">
+                                                    <label for="Name">Relation Type</label>
+                                                    <select name="relationtype" class="form-control" id="relationtype">
                                         <option value="">Select Relation Type</option>
+                                        <option value="RelType">RelType</option>
                                     </select>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Relation Name</label>
-                                                    <input type="text" class="form-control " id="relationname" name="relationname" placeholder="Enter Relation Name " required>
+                                                <div class="form-group">
+                                                    <label for="Name">Relation Name</label>
+                                                    <input type="text" class="form-control" id="relationname" name="relationname" placeholder="Enter Relation Name" required>
                                                 </div>
 
-                                                <div class="form-group ">
+                                                <div class="form-group">
                                                     <input type="checkbox" name="isactive" id="isactive">
-                                                    <label for="dIsActive "> is Active?</label>
+                                                    <label for="dIsActive"> is Active?</label>
 
 
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 ">
-                                            <div class="card-header ">
-                                                <i class="fa fa-phone "></i> Contact Details
+                                        <div class="col-md-4">
+                                            <div class="card-header">
+                                                <i class="fa fa-phone"></i> Contact Details
                                             </div>
-                                            <div class="p-3 ">
-                                                <div class="form-group ">
-                                                    <label for="Name ">Mobile Number</label>
-                                                    <input type="text " class="form-control " id="mobileno" name="mobileno" placeholder="Enter State Name " required>
+                                            <div class="p-3">
+                                                <div class="form-group">
+                                                    <label for="Name">Mobile Number</label>
+                                                    <input type="text" class="form-control" id="mobileno" name="mobileno" placeholder="Enter State Name" required>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Alternate Mobile Number</label>
-                                                    <input type="text " class="form-control " id="alternateContact" name="alternateContact" placeholder="Enter State Name " required>
+                                                <div class="form-group">
+                                                    <label for="Name">Alternate Mobile Number</label>
+                                                    <input type="text" class="form-control" id="alternateContact" name="alternateContact" placeholder="Enter State Name" required>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Email</label>
-                                                    <input type="email " class="form-control " id="emailid" name="emailid" placeholder="Enter State Name " required>
+                                                <div class="form-group">
+                                                    <label for="Name">Email</label>
+                                                    <input type="email" class="form-control" id="emailid" name="emailid" placeholder="Enter State Name" required>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <label for="Name ">Address</label>
-                                                    <textarea name="address" id="address" class="form-control "></textarea>
+                                                <div class="form-group">
+                                                    <label for="Name">Address</label>
+                                                    <textarea name="address" id="address" class="form-control"></textarea>
                                                 </div>
-                                                <div class="form-group ">
-                                                    <div class="mt-5 ">
-                                                        <button type="reset" class=" btn btn-default float-right ">
+                                                <div class="form-group">
+                                                    <div class="mt-5">
+                                                        <button type="reset" class=" btn btn-default float-right">
                                          Reset
                                     </button>
-                                                        <button type="submit" class="btn btn-primary float-right mr-2 ">
+                                                        <button type="submit" class="btn btn-danger float-right mr-2" id="submitUser">
                                                 Add User
                                             </button>
                                                     </div>
@@ -164,7 +166,7 @@
 
                                 </form>
                             </div>
-                            <div class="card-footer ">
+                            <div class="card-footer">
 
                             </div>
                         </div>
@@ -176,7 +178,7 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card border-left-danger shadow h-100 py-2">
                             <div class="card-body">
                                 <table id="usersTable" style="width:100%" class="table table-bordered table-hover">
                                     <thead>
@@ -222,12 +224,67 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-primary btn-sm editDept" data-user="' + JSON.stringify(row) + '"><i class="fas fa-edit"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteDept" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                    return "<button type='button' class='btn btn-danger btn-sm edit' data-user='" + JSON.stringify(row).replace('"', '\"') + "'><i class='fas fa-edit'></i></button>" +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }]
         })
+
+        $('#usersTable').on('click', '.edit', function() {
+            var button = $(this)
+            var user = JSON.parse(button.attr('data-user'))
+            formDeserialize(document.getElementById('UserForm'), user)
+            $('#submitUser').html('Update User')
+            $('#userFormTab').trigger('click')
+        })
+
+        function formDeserialize(form, data) {
+            const entries = (new URLSearchParams(data)).entries();
+            for (const [key, val] of entries) {
+                //http://javascript-coder.com/javascript-form/javascript-form-value.phtml
+                const input = form.elements[key];
+                if (input != undefined) {
+                    if (input.type == 'file') {
+                        var $file = $('#' + input.id),
+                            $label = $file.next('label'),
+                            $labelText = $label.find('span'),
+                            labelDefault = $labelText.text();
+                        var filename = val.split('/').pop()
+                        console.log(filename)
+                        if (filename) {
+                            $label
+                                .addClass('file-ok')
+                                .css('background-image', 'url(' + val + ')');
+                            $labelText.text(filename);
+                        } else {
+                            $label.removeClass('file-ok');
+                            $labelText.text(labelDefault);
+                        }
+                    } else {
+
+                        switch (input.type) {
+                            case 'checkbox':
+                                input.checked = !!val;
+                                break;
+                            case 'select-one':
+                                if (val)
+                                    input.value = val;
+                                else
+                                    input.selectedIndex = 0;
+
+                                break;
+                            default:
+                                input.value = val;
+                                break;
+
+                        }
+
+                    }
+                }
+
+            }
+        }
 
         $('#UserForm').submit(function(e) {
             e.preventDefault()
@@ -242,12 +299,12 @@
                 contentType: false,
                 processData: false,
                 success: function() {
-                    toastr.success(" User Added Successfully ")
+                    toastr.success(" User Added Successfully")
                 },
                 error: function(err) {
                     console.log(err)
 
-                    toastr.error("User Adding Failed ")
+                    toastr.error("User Adding Failed")
                 }
             })
         })

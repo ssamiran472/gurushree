@@ -4,7 +4,7 @@
 </div>
 <div class="row">
     <div class="col-xl-12 col-md-12 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card border-left-danger shadow h-100 py-2">
             <div class="card-body">
                 <form id="ieForm">
                     <div class="row">
@@ -18,14 +18,14 @@
                         </div>
                         <div class="form-group col-md-3">
                             <label for="Name">Particular</label>
-                            <input type="number" class="form-control" id="particular" placeholder="Enter Priority Value" required>
+                            <input type="text" class="form-control" id="particular" placeholder="Enter Particulars" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="Name">is Active?</label>
                             <div class="input-group">
                                 <input type="checkbox" class="form-check" id="dIsActive">
                                 <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-primary ml-5" id="submitBtn" value="Add Income">
+                                                      <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Income">
                                                 </span>
                             </div>
 
@@ -42,7 +42,7 @@
 
     <!-- Earnings (Monthly) Card Example -->
     <div class="col-xl-12 col-md-12 mb-4">
-        <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card border-left-danger shadow h-100 py-2">
 
             <div class="card-body">
                 <div class="table-responsive">
@@ -64,7 +64,7 @@
 
 </div>
 {% endblock %} {% block scripts%}
-<script> 
+<script>
     $(document).ready(function() {
         var table = $("#ie").DataTable({
             ajax: {
@@ -75,7 +75,7 @@
                 data: 'Type'
             }, {
                 data: 'particular'
-           
+
             }, {
                 data: 'isActive',
                 render: function(data) {
@@ -87,10 +87,14 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-primary btn-sm editie" data-Type=' + row.Type + ' data-particular=' + row.particular + '  data-isactive=' + row.isActive + ' data-Type-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                    return '<button type="button" class="btn btn-danger btn-sm editie" data-Type=' + row.Type + ' data-particular=' + row.particular + '  data-isactive=' + row.isActive + ' data-Type-id="' + data + '"><i class="fas fa-edit"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ml-2 deleteie" data-Type-id="' + data + '"><i class="fas fa-trash"></i></button>'
                 }
-            }]
+            }],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "",
+            }
         })
         $("#ie").on('click', '.editie', function() {
             var button = $(this);
@@ -148,7 +152,8 @@
                     toastr.success(succesMessage, 'Success', {
                         positionClass: "toast-top-center"
                     })
-        s        }).fail((err) => {
+                    s
+                }).fail((err) => {
                     console.log(err)
                     toastr.error('Operation failed', 'Error', {
                         positionClass: "toast-top-center"
