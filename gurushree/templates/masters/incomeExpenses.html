@@ -20,14 +20,16 @@
                             <label for="Name">Particular</label>
                             <input type="text" class="form-control" id="particular" placeholder="Enter Particulars" required>
                         </div>
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-1">
                             <label for="Name">is Active?</label>
-                            <div class="input-group">
-                                <input type="checkbox" class="form-check" id="dIsActive">
-                                <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Income">
-                                                </span>
-                            </div>
+                            <label class="check-container">
+                                <input type="checkbox" id="dIsActive">
+                                <span class="checkmark"></span>
+                            </label>
+
+                        </div>
+                        <div class="col-md-2">
+                            <input type="submit" class="btn btn-danger mt-5=4" id="submitBtn" value="Add Income">
 
                         </div>
                     </div>
@@ -104,22 +106,31 @@
             $('#ieId').val(button.attr('data-Type-id'))
             $('#submitBtn').val('Update ie');
         })
+
         $("#ie").on('click', '.deleteie', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/income_expenses/' + button.attr('data-Type-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Income and Expenses Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('menu failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/income_expenses/' + button.attr('data-Type-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/income_expenses/' + button.attr('data-Type-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Income/Expenses Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Income/Expenses Type Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
         $('#ieForm').submit(function(e) {

@@ -30,6 +30,7 @@ class SubDepartment(models.Model):
 
 class generalType(models.Model):
     genType = models.CharField(max_length=32)
+    name=models.CharField(max_length=32, null=True)
     genValue = models.CharField(max_length=32)
     isActive = models.BooleanField()
     addedBy = models.CharField(max_length=32, null=True)
@@ -114,14 +115,14 @@ class income_expenses(models.Model):
 
 class hospital(models.Model):
     hospitalName = models.CharField(max_length=100, null=True)
-    address1 = models.CharField(max_length=32, null=True)
-    address2 = models.CharField(max_length=32, null=True)
+    address1 = models.CharField( max_length=1000,null=True)
+    address2 = models.CharField(max_length=1000, null=True)
     shortName = models.CharField(max_length=32, null=True)
     phone = models.CharField(max_length=32, null=True)
     FAX = models.CharField(max_length=32, null=True)
     pincode = models.CharField(max_length=32, null=True)
-    Logo1 = models.CharField(max_length=32, null=True)
-    Logo2 = models.CharField(max_length=32, null=True)
+    Logo1 = models.FileField(max_length=355, null=True)
+    Logo2 = models.FileField(max_length=355, null=True)
     isActive = models.BooleanField()
     addedBY = models.CharField(max_length=32, null=True)
     addeddate = models.DateTimeField(auto_now_add=True)
@@ -148,7 +149,7 @@ class professional(models.Model):
     IPShare = models.DecimalField(max_digits=10, decimal_places=2)
     IPShareamount = models.DecimalField(max_digits=10, decimal_places=2)
     licenceNo = models.CharField(max_length=32, null=True)
-    photo = models.CharField(max_length=32, null=True)
+    photo = models.FileField(max_length=355, null=True)
     contactNo = models.CharField(max_length=32, null=True)
     email = models.CharField(max_length=32, null=True)
     hospitalName = models.CharField(max_length=32, null=True)

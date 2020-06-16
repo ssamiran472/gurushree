@@ -27,14 +27,16 @@
                                             <label for="Name">Priority</label>
                                             <input type="number" class="form-control" id="priority" placeholder="Enter Priority Value" required>
                                         </div>
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
-                                            <div class="input-group">
-                                                <input type="checkbox" class="form-check" id="dIsActive">
-                                                <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Department">
-                                                </span>
-                                            </div>
+                                            <label class="check-container">
+                                                <input type="checkbox" id="dIsActive"  class="form-control">
+                                                <span class="checkmark"></span>
+                                            </label>
+
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-danger mt-4" id="submitBtn" value="Add Department">
 
                                         </div>
                                     </div>
@@ -74,8 +76,6 @@
             </div>
             <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                 <div class="row">
-
-                    <!-- Earnings (Monthly) Card Example -->
                     <div class="col-xl-12 col-md-12 mb-4">
                         <div class="card border-left-danger shadow h-100 py-2">
                             <div class="card-body">
@@ -84,10 +84,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-3">
                                             <label for="Name">Department</label>
-                                            <select id="sDepartment" class="form-control" name="department" required>
-                                                <option value="">Select Department</option>
-                
-                                            </select>
+                                            <input type="text" class="form-control" id="sDepartment" placeholder="Select Department">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Name">Sub-Department</label>
@@ -97,16 +94,17 @@
                                             <label for="Name">Priority</label>
                                             <input type="number" class="form-control" id="sPriority" placeholder="Enter Priority Value" name="sPririty" required>
                                         </div>
-                                        <div class="form-group col-md-3">
+                                        <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
-                                            <div class="input-group">
-                                                <input type="checkbox" class="form-check" id="sIsActive">
-                                                <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-danger ml-5" id="submitSub" value="Add Sub Department">
-                                                </span>
-                                            </div>
-
+                                            <label class="check-container">
+                                                <input type="checkbox" id="sIsActive">
+                                                <span class="checkmark"></span>
+                                            </label>
                                         </div>
+                                        <div class="form-group col-md-2">
+                                            <input type="submit" class="btn btn-danger mt-4" id="submitSub" value="Add Sub Department">
+                                        </div>
+
                                     </div>
 
                                 </form>
@@ -171,8 +169,8 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-primary btn-sm editDept" data-dept=' + row.name + ' data-priority=' + row.priority + ' data-isactive=' + row.isActive + ' data-dept-id="' + data + '"><i class="fas fa-edit"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteDept" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                    return '<button type="button" class="btn btn-primary btn-sm editDept" data-dept=' + row.name + ' data-priority=' + row.priority + ' data-isactive="' + row.isActive + '" data-dept-id=" ' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteDept" data-dept-id=" ' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }],
@@ -182,41 +180,59 @@
             }
         })
 
-        $.getJSON('/api/masters/departments', {}, function(data) {
+        map = {}
+        $.getJSON('/api/masters/departments/?isActive=True', {}, function(data) {
             if (data) {
-                var departments = '<option value="">Select Department</option>'
-                $.each(data, function(i, dept) {
-                    departments += '<option value="' + dept.id + '">' + dept.name + '</option>'
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[item.name] = item
+                    departments.push(item.name)
                 })
-                $('#sDepartment').html(departments)
+                $("#sDepartment").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
             }
         })
+
+
 
         $("#departments").on('click', '.editDept', function() {
             var button = $(this);
             $('#deptName').val(button.attr('data-dept'))
             $('#priority').val(button.attr('data-priority'))
-            $('#dIsActive').prop('checked', button.attr('data-isactive'))
+            $('#dIsActive').prop('checked', button.attr('data-isactive') == 'true')
             $('#deptId').val(button.attr('data-dept-id'))
             $('#submitBtn').val('Update Department');
         })
 
         $("#departments").on('click', '.deleteDept', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/departments/' + button.attr('data-dept-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Department Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('Department Deletion failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/departments/' + button.attr('data-dept-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/departments/' + button.attr('data-dept-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Department Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Department Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 
@@ -285,8 +301,8 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-primary btn-sm editDept" data-dept=' + row.department.id + ' data-priority=' + row.priority + ' data-name=' + row.subDepartment + ' data-isactive=' + row.isActive + ' data-dept-id="' + data + '"><i class="fas fa-edit"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteDept" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                    return '<button type="button" class="btn btn-primary btn-sm editDept" data-dept=' + row.department.name + ' data-priority=' + row.priority + ' data-name=' + row.subDepartment + ' data-isactive="' + row.isActive + '" data-dept-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteDept" data-dept-id=" ' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }],
@@ -301,28 +317,38 @@
             $('#sDepartment').val(button.attr('data-dept'))
             $('#sName').val(button.attr('data-name'))
             $('#sPriority').val(button.attr('data-priority'))
-            $('#sIsActive').prop('checked', button.attr('data-isactive'))
+            $('#sIsActive').prop('checked', button.attr('data-isactive') == 'true')
             $('#sdeptId').val(button.attr('data-dept-id'))
             $('#submitSub').val('Update Sub Department');
         })
 
         $("#subdepartments").on('click', '.deleteDept', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/subdepartments/' + button.attr('data-dept-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Sub Department Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('Sub Department Deletion failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/subdepartments/' + button.attr('data-dept-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/subdepartments/' + button.attr('data-dept-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Sub Department Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Sub Department Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
+
+
         })
 
         $('#subdepartmentForm').submit(function(e) {
@@ -330,7 +356,7 @@
             e.stopImmediatePropagation()
             if ($('#subdepartmentForm').valid()) {
                 var data = {
-                    department: $('#sDepartment').val(),
+                    department: map[$('#sDepartment').val()].id,
                     subDepartment: $('#sName').val(),
                     priority: $('#sPriority').val(),
                     isActive: $('#sIsActive').prop('checked') == true

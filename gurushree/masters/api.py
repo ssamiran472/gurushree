@@ -4,11 +4,17 @@ from rest_framework import viewsets, permissions, mixins
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
-    queryset = Department.objects.all()
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = DepartmentSerializer
+
+    def get_queryset(self):
+        queryset = Department.objects.all()
+        flag = self.request.query_params.get('isActive', None)
+        if flag is not None:
+            queryset = queryset.filter(isActive=flag)
+        return queryset
 
 
 class SubDepartmentViewSet(viewsets.ModelViewSet):
@@ -30,7 +36,7 @@ class GeneralTypeViewSet(viewsets.ModelViewSet):
         queryset = generalType.objects.all()
         gentype = self.request.query_params.get('gentype', None)
         if gentype is not None:
-            queryset = queryset.filter(genType=gentype)
+            queryset = queryset.filter(genType=gentype).filter(isActive=True)
         return queryset
 
 
@@ -83,11 +89,17 @@ class professionalViewSet(viewsets.ModelViewSet):
 
 
 class menuViewSet(viewsets.ModelViewSet):
-    queryset = menu.objects.all()
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = menuSerializer
+    def get_queryset(self):
+        queryset = menu.objects.all()
+        flag = self.request.query_params.get('isActive', None)
+        if flag is not None:
+            queryset = queryset.filter(isActive=flag)
+        return queryset
+
 
 
 class pagemasterViewSet(viewsets.ModelViewSet):
@@ -99,11 +111,18 @@ class pagemasterViewSet(viewsets.ModelViewSet):
 
 
 class StateViewSet(viewsets.ModelViewSet):
-    queryset = State.objects.all()
+    
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = StateSerializer
+
+    def get_queryset(self):
+        queryset = State.objects.all()
+        flag = self.request.query_params.get('isActive', None)
+        if flag is not None:
+            queryset = queryset.filter(isActive=flag)
+        return queryset
 
 
 class CityViewSet(viewsets.ModelViewSet):
@@ -123,22 +142,44 @@ class AreaViewSet(viewsets.ModelViewSet):
 
 
 class CitiesListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = City.objects.all()
+    
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = CitiesListSerializer
+    def get_queryset(self):
+            queryset = City.objects.all()
+            flag = self.request.query_params.get('isActive', None)
+            if flag is not None:
+                queryset = queryset.filter(isActive=flag)
+            return queryset
+    
 
 class SubdepartmentsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = SubDepartment.objects.all()
+    
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = SubDepartmentsListSerializer
+   
+    def get_queryset(self):
+        queryset = SubDepartment.objects.all()
+        flag = self.request.query_params.get('isActive', None)
+        if flag is not None:
+            queryset = queryset.filter(isActive=flag)
+        return queryset
+    
 
 class GenTypeViewSet(viewsets.ModelViewSet):
-    queryset=GenType.objects.all()
+    
     permissions = [
         permissions.AllowAny
     ]
     serializer_class =GenTypeSerializer
+
+    def get_queryset(self):
+        queryset = GenType.objects.all()
+        flag = self.request.query_params.get('isActive', None)
+        if flag is not None:
+            queryset = queryset.filter(isActive=flag)
+        return queryset

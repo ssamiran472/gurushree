@@ -79,10 +79,7 @@
                                     <div class="row">
                                         <div class="form-group col-md-3">
                                             <label for="Name">State</label>
-                                            <select id="cState" class="form-control" name="cState" required>
-                                                <option value="">Select State</option>
-                
-                                            </select>
+                                            <input type="text" class="form-control" placeholder="Select State" id="cState">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Name">City</label>
@@ -141,9 +138,7 @@
                                         <input type="hidden" id="areaId">
                                         <div class="form-group col-md-3">
                                             <label for="Name">City</label>
-                                            <select class="form-control" id="citiesCombo" required>
-                                                <option value="">Select City</option>
-                                            </select>
+                                            <input type="text" class="form-control" id="citiesCombo" placeholder="Select City">
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="Name">Area</label>
@@ -228,7 +223,7 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button " class="btn btn-success btn-sm edit " data-state=" ' + row.name + ' " data-isactive=' + row.isActive + ' data-state-id=" ' + data + ' "><i class="fas fa-edit "></i></button>' +
+                    return '<button type="button " class="btn btn-primary btn-sm edit " data-state=" ' + row.name + ' " data-isactive=' + row.isActive + ' data-state-id=" ' + data + ' "><i class="fas fa-edit "></i></button>' +
                         '<button type="button " class="btn btn-danger btn-sm ml-2 delete " data-state-id=" ' + data + ' "><i class="fas fa-trash "></i></button>'
 
                 }
@@ -251,20 +246,28 @@
 
         $("#StatesTable ").on('click', '.delete', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/states/' + button.attr('data-state-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('State Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center "
-                    })
-                },
-                error: function(err) {
-                    toastr.error('State Deletion failed', 'Error', {
-                        positionClass: "toast-top-center "
-                    })
-                }
+            $.getJSON('/api/masters/states/' + button.attr('data-state-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/states/' + button.attr('data-state-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('State Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('State Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 
@@ -332,7 +335,7 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button " class="btn btn-success btn-sm edit " data-state="' + row.state.id + '" data-city="' + row.name + '" data-isactive=' + row.isActive + ' data-city-id="' + data + '"><i class="fas fa-edit "></i></button>' +
+                    return '<button type="button " class="btn btn-primary btn-sm edit " data-state="' + row.state.id + '" data-city="' + row.name + '" data-isactive=' + row.isActive + ' data-city-id="' + data + '"><i class="fas fa-edit "></i></button>' +
                         '<button type="button " class="btn btn-danger btn-sm ml-2 delete " data-city-id=" ' + data + ' "><i class="fas fa-trash "></i></button>'
 
                 }
@@ -343,13 +346,21 @@
             }
         })
 
-        $.getJSON('/api/masters/states', {}, function(data) {
+        map = {}
+        $.getJSON('/api/masters/states/?isActive=True', {}, function(data) {
             if (data) {
-                var cities = '<option value="">Select State</option>'
+                var departments = []
+
                 $.each(data, function(i, item) {
-                    cities += `<option value="${item.id}">${item.name}</option>`
+                    map[item.name] = item
+                    departments.push(item.name)
                 })
-                $('#cState').html(cities)
+                $("#cState").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
             }
         })
 
@@ -365,20 +376,28 @@
 
         $("#CitiesTable ").on('click', '.delete', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/cities/' + button.attr('data-city-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('City Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center "
-                    })
-                },
-                error: function(err) {
-                    toastr.error('City Deletion failed', 'Error', {
-                        positionClass: "toast-top-center "
-                    })
-                }
+            $.getJSON('/api/masters/cities/' + button.attr('data-city-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/cities/' + button.attr('data-city-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('City Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('City Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 
@@ -449,8 +468,8 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button " class="btn btn-success btn-sm edit" data-city="' + row.city + '" data-area="' + row.name + '" data-pincode=" ' + row.pincode + ' " data-isactive=' + row.isActive + ' data-area-id=" ' + data + '"><i class=" fas fa-edit "></i></button>' +
-                        '<button type="button " class="btn btn-danger btn-sm ml-2 delete " data-state-id=" ' + data + ' "><i class="fas fa-trash "></i></button>'
+                    return '<button type="button " class="btn btn-primary btn-sm edit" data-city="' + row.city + '" data-area="' + row.name + '" data-pincode=" ' + row.pincode + ' " data-isactive=' + row.isActive + ' data-area-id=" ' + data + '"><i class=" fas fa-edit "></i></button>' +
+                        '<button type="button " class="btn btn-danger btn-sm ml-2 delete " data-area-id=" ' + data + ' "><i class="fas fa-trash "></i></button>'
 
                 }
             }],
@@ -461,13 +480,31 @@
         })
 
         //Loading The Dropdown
-        $.getJSON('/api/masters/citieslist/', {}, function(data) {
+        $.getJSON('/api/masters/citieslist/?isActive=True', {}, function(data) {
             if (data) {
                 var cities = '<option value="">Select City</option>'
                 $.each(data, function(i, item) {
                     cities += `<option value="${item.name},${item.state.name}">${item.name},${item.state.name}</option>`
                 })
                 $('#citiesCombo').html(cities)
+            }
+        })
+
+        map = {}
+        $.getJSON('/api/masters/citieslist/', {}, function(data) {
+            if (data) {
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[`${item.name},${item.state.name}`] = item
+                    departments.push(`${item.name},${item.state.name}`)
+                })
+                $("#citiesCombo").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
             }
         })
 
@@ -484,20 +521,28 @@
 
         $("#AreasTable ").on('click', '.delete', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/areas/' + button.attr('data-area-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Area Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center "
-                    })
-                },
-                error: function(err) {
-                    toastr.error('Area Deletion failed', 'Error', {
-                        positionClass: "toast-top-center "
-                    })
-                }
+            $.getJSON('/api/masters/areas/' + button.attr('data-area-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/areas/' + button.attr('data-area-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Area Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Area Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 

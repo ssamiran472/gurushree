@@ -18,7 +18,7 @@
                         <div class="card border-left-danger shadow h-100 py-2">
                             <div class="card-body">
                                 <form id="UserForm">
-                                    <input type="hidden" name='id'>
+                                    <input type="hidden" name='id' id="UserId">
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="card-header">
@@ -86,10 +86,7 @@
                                             <div class="p-3">
                                                 <div class="form-group">
                                                     <label for="Name">Department</label>
-                                                    <select name="department" class="form-control" id="department">
-                                        <option value="">Select Department</option>
-                                        <option value="OPD">OPD</option>
-                                    </select>
+                                                    <input type="text" class="form-control" placeholder="Select Department" id="DepartmentCombo" name="department">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Name">Employee Code</label>
@@ -97,10 +94,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Name">User Type</label>
-                                                    <select name="user" class="form-control" id="user">
-                                        <option value="">Select User Type</option>
-                                        <option value="Admin">Admin</option>
-                                    </select>
+                                                    <input type="text" class="form-control" id="UserType" name='user' placeholder="Select User Type">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Name">Couter</label>
@@ -108,10 +102,8 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Name">Relation Type</label>
-                                                    <select name="relationtype" class="form-control" id="relationtype">
-                                        <option value="">Select Relation Type</option>
-                                        <option value="RelType">RelType</option>
-                                    </select>
+                                                    <input type="text" class="form-control" id="RelType" name="relationtype" placeholder="Select Relation Type" required>
+
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="Name">Relation Name</label>
@@ -119,9 +111,10 @@
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="checkbox" name="isactive" id="isactive">
-                                                    <label for="dIsActive"> is Active?</label>
-
+                                                    <label class="check-container">
+                                                        <input type="checkbox" id="isActive" name="isActive"> is Active?
+                                                        <span class="checkmark"></span>
+                                                    </label>
 
                                                 </div>
                                             </div>
@@ -205,6 +198,58 @@
 {% endblock %}{% block scripts %}
 <script>
     $(document).ready(function() {
+        map = {}
+        $.getJSON('/api/masters/subdepartmentsList/?isActive=True', {}, function(data) {
+            if (data) {
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[`${item.department.name},${item.subDepartment}`] = item
+                    departments.push(`${item.department.name},${item.subDepartment}`)
+                })
+                $("#DepartmentCombo").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
+            }
+        })
+
+        $.getJSON('/api/masters/generalTypes/?gentype=RelationType', {}, function(data) {
+            if (data) {
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[item.name] = item
+                    departments.push(item.name)
+                })
+                $("#RelType").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
+            }
+        })
+
+        $.getJSON('/api/masters/generalTypes/?gentype=UserType', {}, function(data) {
+            if (data) {
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[item.name] = item
+                    departments.push(item.name)
+                })
+                $("#UserType").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
+            }
+        })
+
         var table = $('#usersTable').DataTable({
             ajax: {
                 url: '/api/masters/user/',
@@ -225,7 +270,7 @@
                 data: 'id',
                 render: function(data, type, row) {
                     return "<button type='button' class='btn btn-danger btn-sm edit' data-user='" + JSON.stringify(row).replace('"', '\"') + "'><i class='fas fa-edit'></i></button>" +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-dept-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-user-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }]
@@ -237,6 +282,28 @@
             formDeserialize(document.getElementById('UserForm'), user)
             $('#submitUser').html('Update User')
             $('#userFormTab').trigger('click')
+        })
+
+        $("#ProfessionalTable").on('click', '.delete', function() {
+            var button = $(this);
+            $.ajax({
+                data: JSON.stringify({
+                    isActive: false
+                }),
+                method: 'PUT',
+                url: '/api/masters/user/' + button.attr('data-user-id') + '/',
+                success: function(data) {
+                    table.ajax.reload()
+                    toastr.success('User Deactivated Successfully', 'Success', {
+                        positionClass: "toast-top-center "
+                    })
+                },
+                error: function(err) {
+                    toastr.error('User Deactivation failed', 'Error', {
+                        positionClass: "toast-top-center "
+                    })
+                }
+            })
         })
 
         function formDeserialize(form, data) {
@@ -291,20 +358,35 @@
             e.stopImmediatePropagation()
 
             var data = new FormData(this)
-
+            var action = 'POST'
+            var url = '/api/masters/user/'
+            var successMessage = 'User Added Successfully'
+            if ($('#submitUser').html() == 'Update User') {
+                if (document.getElementById('image1').files.length == 0)
+                    data.delete('photo')
+                action = 'PUT'
+                url = `/api/masters/user/${$('#UserId').val()}/`
+                successMessage = 'User Update Successfully'
+            }
             $.ajax({
-                url: '/api/masters/user/',
+                url: url,
                 data: data,
-                method: 'POST',
+                method: action,
                 contentType: false,
                 processData: false,
                 success: function() {
-                    toastr.success(" User Added Successfully")
+                    table.ajax.reload()
+                    $('#userTableTab').trigger('click')
+                    toastr.success(successMessage, "Done", {
+                        positionClass: "toast-top-center"
+                    })
                 },
                 error: function(err) {
                     console.log(err)
-
-                    toastr.error("User Adding Failed")
+                    $('#UserForm').trigger('reset')
+                    toastr.error("Operation Failed", 'Error', {
+                        positionClass: "toast-top-center"
+                    })
                 }
             })
         })

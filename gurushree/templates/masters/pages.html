@@ -11,16 +11,15 @@
                         <input type="hidden" id="pageId">
                         <div class="form-group col-md-2">
                             <label for="Name">Menu</label>
-                            <select name="menu" id="menu" class="form-control">
-                                <option value="1">Select Menu</option>
-                                <option value="2">Menu</option>
-                            </select>
+                            <input type="text" class="form-control" id="menu" placeholder="Select Menu Name">
                         </div>
                         <div class="form-group col-md-2">
                             <label for="Name">Sub Menu Name</label>
                             <select name="" id="smenu" class="form-control">
-                                <option value="1">Select Submenu</option>
-                                <option value="2">Select Submenu</option>
+                                <option value="">Select Sub Menu Name</option>
+                                <option value="Masters">Masters</option>
+                                <option value="Transactions">Transactions</option>
+                                <option value="Reports">Reports</option>
                             </select>
                         </div>
                         <div class="form-group col-md-3">
@@ -31,14 +30,17 @@
                             <label for="Name">Priority</label>
                             <input type="Number" class="form-control" id="priority" placeholder="Enter Priority Value" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-1">
                             <label for="Name">is Active?</label>
-                            <div class="input-group">
-                                <input type="checkbox" class="form-check" id="dIsActive">
-                                <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Page">
-                                                </span>
-                            </div>
+
+                            <label class="check-container">
+                                <input type="checkbox" id="dIsActive">
+                                <span class="checkmark"></span>
+                            </label>
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="submit" class="btn btn-danger mt-4" id="submitBtn" value="Add Page">
 
                         </div>
                     </div>
@@ -103,7 +105,7 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-danger btn-sm editpage" data-pageName=' + row.pageName + ' data-submenuName=' + row.submenuName + ' data-menuid=' + row.menuid + ' data-priority=' + row.priority + '  data-isactive=' + row.isActive + ' data-page-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                    return '<button type="button" class="btn btn-primary btn-sm editpage" data-pageName=' + row.pageName + ' data-submenuName=' + row.submenuName + ' data-menuid=' + row.menuid + ' data-priority=' + row.priority + '  data-isactive=' + row.isActive + ' data-page-id="' + data + '"><i class="fas fa-edit"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ml-2 deletepage" data-page-id="' + data + '"><i class="fas fa-trash"></i></button>'
                 }
             }],
@@ -112,6 +114,25 @@
                 search: "",
             }
         })
+
+        map = {}
+        $.getJSON('/api/masters/menu/?isActive=True', {}, function(data) {
+            if (data) {
+                var departments = []
+
+                $.each(data, function(i, item) {
+                    map[item.MenuName] = item
+                    departments.push(item.MenuName)
+                })
+                $("#menu").autocomplete({
+                    source: departments,
+                    minLength: 0
+                }).focus(function() {
+                    $(this).data("uiAutocomplete").search($(this).val());
+                });;
+            }
+        })
+
         $("#page").on('click', '.editpage', function() {
             var button = $(this);
             $('#pname').val(button.attr('data-pageName'))
@@ -125,20 +146,28 @@
 
         $("#page").on('click', '.deletepage', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/pagemaster/' + button.attr('data-page-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Page Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('Page Deletion failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/pagemaster/' + button.attr('data-page-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/pagemaster/' + button.attr('data-page-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Page Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Page Type Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 

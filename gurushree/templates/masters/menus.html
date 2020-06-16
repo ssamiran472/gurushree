@@ -21,14 +21,16 @@
                             <label for="Name">Priority</label>
                             <input type="Number" class="form-control" id="priority" placeholder="Enter Priority Value" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-1 ">
                             <label for="Name">is Active?</label>
-                            <div class="input-group">
-                                <input type="checkbox" class="form-check" id="dIsActive">
-                                <span class="input-group-btn">
-                                                      <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Menu">
-                                                </span>
-                            </div>
+                            <label class="check-container">
+                                <input type="checkbox" id="dIsActive">
+                                <span class="checkmark"></span>
+                            </label>
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="submit" class="btn btn-danger mt-4" id="submitBtn" value="Add Menu">
 
                         </div>
                     </div>
@@ -90,7 +92,7 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-danger btn-sm editmenu" data-MenuName=' + row.MenuName + ' data-MenuIcon=' + row.MenuIcon + ' data-priority=' + row.priority + ' data-isactive=' + row.isActive + ' data-MenuName-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                    return '<button type="button" class="btn btn-primary btn-sm editmenu" data-MenuName=' + row.MenuName + ' data-MenuIcon=' + row.MenuIcon + ' data-priority=' + row.priority + ' data-isactive=' + row.isActive + ' data-MenuName-id="' + data + '"><i class="fas fa-edit"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ml-2 deletemenu" data-MenuName-id="' + data + '"><i class="fas fa-trash"></i></button>'
                 }
             }],
@@ -110,20 +112,28 @@
         })
         $("#menu").on('click', '.deletemenu', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/menu/' + button.attr('data-MenuName-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Menu Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('menu failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/menu/' + button.attr('data-MenuName-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/menu/' + button.attr('data-MenuName-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Menu Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Menu Type Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
         $('#menuForm').submit(function(e) {

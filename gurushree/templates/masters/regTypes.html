@@ -21,14 +21,16 @@
                             <label for="Name">Reneval Fee</label>
                             <input type="number" class="form-control" id="renevalfee" placeholder="Enter Reneval Fee" required>
                         </div>
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-1">
                             <label for="Name">is Active?</label>
-                            <div class="input-group">
-                                <input type="checkbox" class="form-check" id="dIsActive">
-                                <span class="input-group-btn">
-                        <input type="submit" class="btn btn-danger ml-5" id="submitBtn" value="Add Regsistration Type">
-                                                </span>
-                            </div>
+                            <label class="check-container">
+                                <input type="checkbox" id="dIsActive">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="submit" class="btn btn-danger mt-4" id="submitBtn" value="Add Regsistration Type">
+
                         </div>
                     </div>
                 </form>
@@ -92,7 +94,7 @@
             }, {
                 data: 'id',
                 render: function(data, type, row) {
-                    return '<button type="button" class="btn btn-danger btn-sm editregistration" data-regtype=' + row.regType + ' data-regFee=' + row.regFee + ' data-renevalFee=' + row.renevalFee + '  data-isactive=' + row.isActive + ' data-reg-id="' + data + '"><i class="fas fa-edit"></i></button>' +
+                    return '<button type="button" class="btn btn-primary btn-sm editregistration" data-regtype=' + row.regType + ' data-regFee=' + row.regFee + ' data-renevalFee=' + row.renevalFee + '  data-isactive=' + row.isActive + ' data-reg-id="' + data + '"><i class="fas fa-edit"></i></button>' +
                         '<button type="button" class="btn btn-danger btn-sm ml-2 deleteregistration" data-reg-id="' + data + '"><i class="fas fa-trash"></i></button>'
                 }
             }],
@@ -113,20 +115,28 @@
 
         $("#regtype").on('click', '.deleteregistration', function() {
             var button = $(this);
-            $.ajax({
-                url: '/api/masters/registrationType/' + button.attr('data-reg-id') + '/',
-                method: 'DELETE',
-                success: function(data) {
-                    table.ajax.reload()
-                    toastr.success('Registration Deleted Successfully', 'Success', {
-                        positionClass: "toast-top-center"
-                    })
-                },
-                error: function(err) {
-                    toastr.error('RegistrationType Deletion failed', 'Error', {
-                        positionClass: "toast-top-center"
-                    })
-                }
+            $.getJSON('/api/masters/registrationType/' + button.attr('data-reg-id') + '/', {}, function(data) {
+                var record = data;
+                record.isActive = false;
+
+                $.ajax({
+                    data: JSON.stringify(record),
+                    method: 'PUT',
+                    url: '/api/masters/registrationType/' + button.attr('data-reg-id') + '/',
+                    contentType: 'application/json',
+                    success: function(data) {
+                        table.ajax.reload()
+                        toastr.success('Registration Type Deleted Successfully', 'Success', {
+                            positionClass: "toast-top-center"
+                        })
+                    },
+                    error: function(err) {
+                        console.log(err)
+                        toastr.error('Registration Type Deletion failed', 'Error', {
+                            positionClass: "toast-top-center"
+                        })
+                    }
+                })
             })
         })
 
