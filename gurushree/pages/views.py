@@ -54,3 +54,7 @@ def professionals(request):
 
 def genTypes(request):
     return render(request,'masters/genTypes.html')
+
+
+def disType(request):
+    return render(request,'masters/disTypes.html')

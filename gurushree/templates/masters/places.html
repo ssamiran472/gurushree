@@ -1,6 +1,6 @@
 {% extends 'admin_layout.html' %} {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Places Master</h1>
+    <h1 class="h3 mb-0 text-gray-800"></h1>
 </div>
 <div class="row">
     <div class="col-md-12">
@@ -27,7 +27,7 @@
                                         <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
                                             <label class="check-container">
-                                                <input type="checkbox" id="sIsActive">
+                                                <input type="checkbox" checked="checked" id="sIsActive">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
@@ -53,6 +53,7 @@
                                     <table class="table table-bordered" id="StatesTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Slno</th>
                                                 <th>State</th>
                                                 <th>is Active?</th>
                                                 <th>Actions</th>
@@ -88,7 +89,7 @@
                                         <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
                                             <label class="check-container">
-                                                    <input type="checkbox" id="cIsActive">
+                                                    <input type="checkbox" checked="checked" id="cIsActive">
                                                     <span class="checkmark"></span>
                                                 </label>
                                         </div>
@@ -113,6 +114,7 @@
                                     <table class="table table-bordered" id="CitiesTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Slno</th>
                                                 <th>State</th>
                                                 <th>City</th>
                                                 <th>is Active?</th>
@@ -151,7 +153,7 @@
                                         <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
                                             <label class="check-container">
-                                                <input type="checkbox" id="aIsActive">
+                                                <input type="checkbox" checked="checked" id="aIsActive">
                                                 <span class="checkmark"></span>
                                             </label>
 
@@ -181,6 +183,7 @@
                                     <table class="table table-bordered " id="AreasTable" width="100% " cellspacing="0 ">
                                         <thead>
                                             <tr>
+                                                <th>Slno</th>
                                                 <th>City</th>
                                                 <th>Area</th>
                                                 <th>Pincode</th>
@@ -231,6 +234,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
 
@@ -343,6 +350,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
 
@@ -407,14 +418,14 @@
             e.stopImmediatePropagation()
             if ($('#CityForm').valid()) {
                 var data = {
-                    state: $('#cState').val(),
+                    state: map[$('#cState').val()].id,
                     name: $('#cityName').val(),
                     isActive: $('#cIsActive').prop('checked') == true
                 }
                 var btnText = $('#submitCity').val();
                 var method = 'POST';
                 var url = '/api/masters/cities/'
-                var succesMessage = 'Depratment Added Successully '
+                var succesMessage = 'City Added Successully '
                 if (btnText == 'Update City') {
                     method = 'PUT';
                     url = `/api/masters/cities/${$('#cityId').val()}/ `
@@ -452,6 +463,8 @@
                 dataSrc: ""
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'city'
             }, {
                 data: 'name'
@@ -476,6 +489,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
 

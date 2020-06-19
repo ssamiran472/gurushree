@@ -1,6 +1,6 @@
 {% extends 'admin_layout.html' %} {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">General Master</h1>
+    <h1 class="h3 mb-0 text-gray-800"></h1>
 </div>
 <div class="row">
     <div class="col md-12">
@@ -26,7 +26,7 @@
                                         <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
                                             <label class="check-container">
-                                                <input type="checkbox" id="isActive">
+                                                <input type="checkbox" checked="checked" id="isActive">
                                                 <span class="checkmark"></span>
                                             </label>
 
@@ -51,6 +51,7 @@
                                     <table class="table table-bordered" id="GenTypes" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
+                                                <th>Slno</th>
                                                 <th>General Type</th>
                                                 <th>is Active?</th>
                                                 <th>Actions</th>
@@ -76,7 +77,6 @@
                                         <div class="form-group col-md-3">
                                             <label for="Name">General Type</label>
                                             <input type="text" class="form-control" id="gentype" placeholder="Select General Type">
-                                            <a href="{%url 'pages:genTypes'%}">New General Type?</a>
                                         </div>
                                         <div class=" form-group col-md-3">
                                             <label for="Name">Name</label>
@@ -89,7 +89,7 @@
                                         <div class="form-group col-md-1">
                                             <label for="Name">is Active?</label>
                                             <label class="check-container">
-                                                <input type="checkbox" id="dIsActive">
+                                                <input type="checkbox" checked="checked" id="dIsActive">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
@@ -111,6 +111,7 @@
                                     <table class="table table-bordered" style="width:100%" id="generaltype">
                                         <thead>
                                             <tr>
+                                                <th>Slno</th>
                                                 <th>General Type</th>
                                                 <th>Name</th>
                                                 <th>General Value</th>
@@ -139,6 +140,8 @@
                 dataSrc: ""
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'genType'
             }, {
                 data: 'name'
@@ -162,6 +165,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
 
@@ -273,6 +280,8 @@
                 dataSrc: ""
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'name'
             }, {
                 data: 'isActive',
@@ -293,6 +302,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
 

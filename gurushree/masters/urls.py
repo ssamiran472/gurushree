@@ -19,5 +19,7 @@ router.register('areas', AreaViewSet, 'areas')
 router.register('citieslist', CitiesListViewSet, 'citieslist')
 router.register('subdepartmentsList', SubdepartmentsListViewSet, 'subdepartmentsList')
 router.register('gentypes', GenTypeViewSet, 'gentypes')
+router.register('discountypes', discounTypeViewSet, 'discountypes')
+
 
 urlpatterns = router.urls

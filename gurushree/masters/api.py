@@ -1,7 +1,7 @@
 from .serializers import GenTypeSerializer, SubDepartmentsListSerializer, DepartmentSerializer, CitiesListSerializer, SubDepartmentSerializer, GeneralTypeSerializer, registrationTypeSerializer, discounTypeSerializer, userSerializer, income_expensesSerializer, hospitalSerializer, professionalSerializer, menuSerializer, pagemasterSerializer, StateSerializer, AreaSerializer, CitySerializer
 from .models import GenType, Department, SubDepartment, generalType, registrationType, discounType, user, income_expenses, hospital, professional, menu, pagemaster, State, City, Area
 from rest_framework import viewsets, permissions, mixins
-
+from django.contrib.auth.hashers import make_password
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     permissions = [
@@ -55,13 +55,33 @@ class discounTypeViewSet(viewsets.ModelViewSet):
     ]
     serializer_class = discounTypeSerializer
 
+    def perform_create(self, serializer):
+        import random
+        n = random.randint(1000,9999)
+        plainPass=str(n)
+        password = make_password(plainPass)
+        serializer.save(password=password)
+
+    def perform_update(self, serializer):
+        # Hash password but passwords are not required
+        if ('password' in self.request.data):
+            password = make_password(self.request.data['password'])
+            serializer.save(password=password)
+        else:
+            serializer.save()
+
 
 class userViewSet(viewsets.ModelViewSet):
-    queryset = user.objects.all()
     permissions = [
         permissions.AllowAny
     ]
     serializer_class = userSerializer
+    def get_queryset(self):
+        queryset = user.objects.all()
+        flag = self.request.query_params.get('isactive', None)
+        if flag is not None:
+            queryset = queryset.filter(isactive=flag)
+        return queryset
 
 
 class income_expensesViewSet(viewsets.ModelViewSet):

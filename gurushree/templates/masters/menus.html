@@ -1,6 +1,6 @@
 {% extends 'admin_layout.html' %} {% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Menu Master</h1>
+    <h1 class="h3 mb-0 text-gray-800"></h1>
 </div>
 <div class="row">
     <div class="col-xl-12 col-md-12 mb-4">
@@ -24,7 +24,7 @@
                         <div class="form-group col-md-1 ">
                             <label for="Name">is Active?</label>
                             <label class="check-container">
-                                <input type="checkbox" id="dIsActive">
+                                <input type="checkbox" checked="checked" id="dIsActive">
                                 <span class="checkmark"></span>
                             </label>
 
@@ -52,6 +52,7 @@
                     <table class="table table-bordered" id="menu" width="100%" cellspacing="0">
                         <thead>
                             <tr>
+                                <th>Slno</th>
                                 <th>Menu Name</th>
                                 <th>Icon</th>
                                 <th>Priority</th>
@@ -76,6 +77,8 @@
                 dataSrc: ""
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'MenuName'
             }, {
                 data: 'MenuIcon'
@@ -99,6 +102,10 @@
             language: {
                 lengthMenu: "_MENU_",
                 search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
             }
         })
         $("#menu").on('click', '.editmenu', function() {

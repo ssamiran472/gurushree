@@ -1,17 +1,18 @@
 {% extends 'admin_layout.html' %} {% load static %}{% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Users Master</h1>
+    <h1 class="h3 mb-0 text-gray-800"></h1>
 </div>
 <div class="row">
     <div class="col-md-12">
         <nav>
-            <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="userFormTab" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">User Form</a>
-                <a class="nav-item nav-link" id="userTableTab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Users List</a>
+            <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">\
+                <a class="nav-item nav-link active" id="userTableTab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Users List</a>
+
+                <a class="nav-item nav-link " id="userFormTab" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">User Form</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="Form" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade" id="Form" role="tabpanel" aria-labelledby="nav-home-tab">
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -112,7 +113,7 @@
 
                                                 <div class="form-group">
                                                     <label class="check-container">
-                                                        <input type="checkbox" id="isActive" name="isActive"> is Active?
+                                                        <input type="checkbox" checked="checked" id="isActive" name="isActive"> is Active?
                                                         <span class="checkmark"></span>
                                                     </label>
 
@@ -167,7 +168,7 @@
 
                 </div>
             </div>
-            <div class="tab-pane fade" id="Table" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="tab-pane fade  show active" id="Table" role="tabpanel" aria-labelledby="nav-home-tab">
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -176,6 +177,7 @@
                                 <table id="usersTable" style="width:100%" class="table table-bordered table-hover">
                                     <thead>
                                         <tr>
+                                            <th>Slno</th>
                                             <th>
                                                 Photo
                                             </th>
@@ -256,6 +258,8 @@
                 dataSrc: ''
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'photo',
                 render: function(data) {
                     return '<img src="' + data + '" style="height:80px;width:120px">'
@@ -273,7 +277,15 @@
                         '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-user-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
-            }]
+            }],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
+            }
         })
 
         $('#usersTable').on('click', '.edit', function() {

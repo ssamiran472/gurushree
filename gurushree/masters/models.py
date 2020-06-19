@@ -59,8 +59,8 @@ class registrationType(models.Model):
 class discounType(models.Model):
     discType = models.CharField(max_length=32)
     discount = models.IntegerField()
-    userId = models.IntegerField(null=True)
-    password = models.CharField(max_length=32)
+    userId = models.CharField(max_length=32)
+    password = models.CharField(max_length=1000,null=True)
     isActive = models.BooleanField()
     addedBY = models.CharField(max_length=32, null=True)
     addeddate = models.DateTimeField(auto_now_add=True)

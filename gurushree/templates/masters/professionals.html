@@ -1,17 +1,18 @@
 {% extends 'admin_layout.html' %} {% load static %}{% block content %}
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Professional Master</h1>
+    <h1 class="h3 mb-0 text-gray-800"></h1>
 </div>
 <div class="row">
     <div class="col-md-12">
         <nav>
             <div class="nav nav-tabs nav-fill nav-pills" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active" id="ProForm" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">Professionals Form</a>
-                <a class="nav-item nav-link" id="ProTab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Professionals List</a>
+                <a class="nav-item nav-link active" id="ProTab" data-toggle="tab" href="#Table" role="tab" aria-controls="nav-profile" aria-selected="false">Professionals List</a>
+                <a class="nav-item nav-link" id="ProForm" data-toggle="tab" href="#Form" role="tab" aria-controls="nav-home" aria-selected="true">Professionals Form</a>
+
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="Form" role="tabpanel" aria-labelledby="ProForm">
+            <div class="tab-pane fade " id="Form" role="tabpanel" aria-labelledby="ProForm">
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -60,7 +61,7 @@
                                                     <label for="Name">Category</label><br>
                                                     <div class="form-check-inline">
                                                         <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="category">C
+                                        <input type="radio" class="form-check-input" name="category" checked="">C
                                         </label>
                                                     </div>
                                                     <div class="form-check-inline">
@@ -142,19 +143,19 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="check-container">
-                                                        <input type="checkbox" id="appointment" name="appointment"> Appointment
+                                                        <input type="checkbox" checked="checked" id="appointment" name="appointment"> Appointment
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="check-container">
-                                                        <input type="checkbox" id="token" name="token"> Token
+                                                        <input type="checkbox" checked="checked" id="token" name="token"> Token
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="check-container">
-                                                        <input type="checkbox" id="isActive" name="isActive"> is Active?
+                                                        <input type="checkbox" checked="checked" id="isActive" name="isActive"> is Active?
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
@@ -175,7 +176,7 @@
                 </div>
 
             </div>
-            <div class="tab-pane fade" id="Table" role="tabpanel" aria-labelledby="ProTab">
+            <div class="tab-pane fade show active" id="Table" role="tabpanel" aria-labelledby="ProTab">
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
@@ -184,6 +185,7 @@
                                 <table class="table table-bordered table-hover" style="width:100%" id="ProfessionalTable">
                                     <thead>
                                         <tr>
+                                            <th>Slno</th>
                                             <th>Professional Name</th>
                                             <th>Contact Number</th>
                                             <th>Email</th>
@@ -248,6 +250,8 @@
                 dataSrc: ''
             },
             columns: [{
+                data: "id"
+            }, {
                 data: 'professionalName'
             }, {
                 data: 'contactNo'
@@ -262,7 +266,15 @@
                         '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-pro-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
-            }]
+            }],
+            language: {
+                lengthMenu: "_MENU_",
+                search: "",
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
+            }
         })
 
         $('#ProfessionalTable').on('click', '.edit', function() {
