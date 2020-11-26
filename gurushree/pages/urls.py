@@ -18,4 +18,8 @@ urlpatterns = [
     path('masters/hospitals', views.hospitals, name='hospitals'),
     path('masters/users', views.users, name='users'),
     path('masters/professionals', views.professionals, name='professionals'),
+    path('masters/services', views.services, name='services'),
+    path('masters/packagemaping', views.packagemap, name='packagemaping'),
+    path('trans/patientReg', views.patientReg, name='patientReg'),
+    path('trans/op_billing', views.op_billing, name='op_billing'),
 ]

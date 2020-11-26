@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import GenType, State, City, Area, Department, SubDepartment, generalType, registrationType, discounType, user, income_expenses, hospital, professional, menu, pagemaster
+from .models import GenType, State, City, Area, Department, SubDepartment,packagemapping, generalType, registrationType, discounType, user, income_expenses, hospital, professional, menu, pagemaster,service
 
 
 class DepartmentSerializer(serializers.ModelSerializer):
@@ -103,4 +103,15 @@ class SubDepartmentsListSerializer(serializers.ModelSerializer):
 class GenTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model=GenType
+        fields='__all__'
+
+class serviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=service
+        fields='__all__'
+
+        
+class packagemappingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=packagemapping
         fields='__all__'

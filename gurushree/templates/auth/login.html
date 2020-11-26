@@ -37,7 +37,7 @@
                                                 <label class="custom-control-label" name="password" for="customCheck">Remember Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-danger btn-lg btn-user ">
+                                        <button type="submit" class="btn btn-danger btn-lg btn-user btn-block ">
                       Login
                                         </button>
                                         <hr>
@@ -59,9 +59,32 @@
     </div>
 
     {% include 'partials/_scripts.html'%}
+    
     <script>
-        $(document).ready(function() {
-            $('#Login').submit(function(e) {
+        window.onload  = function(){
+            $('.btn-user').attr('disabled','disabled')
+            $('.btn-user').html('<i class="fa fa-circle-o-notch fa-spin"></i> Checking Session...')
+            $.ajax({
+                url: '/api/auth/user',
+                method: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Token " + $.cookie('Token'));
+                },
+            }).done((response) => {
+                setTimeout(() => {
+                    window.location.href = '/dashboard'
+                }, 2000);
+            }).fail((err, error, wrong) => {  
+                $('.btn-user').removeAttr('disabled')          
+                $('.btn-user').html('Login')
+                console.log(err)
+            })
+        }
+        $(document).ready(function () {
+          
+
+
+            $('#Login').submit(function (e) {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 var data = {

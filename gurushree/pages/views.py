@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from transactions.models import patient_registration
+from masters.models import professional
 
 
 def index(request):
@@ -58,3 +60,28 @@ def genTypes(request):
 
 def disType(request):
     return render(request,'masters/disTypes.html')
+
+def services(request):
+    return render(request,'masters/services.html')
+
+def packagemap(request):
+    return render(request,'masters/packagemap.html')
+
+def patientReg(request):
+    return render(request,'transactions/patientReg.html')
+
+def op_billing(request):
+    if request.GET.get('patient_id'):
+        patient = patient_registration.objects.get(id=request.GET.get('patient_id'))
+        consultants = professional.objects.filter(category='C')
+        Refferals = professional.objects.filter(category='R')
+        return render(request,'transactions/op_billing.html',{
+            "patient":patient,
+            "consultants":consultants,
+            "refferals":Refferals
+        })
+    else:
+        return redirect('/trans/patientReg')
+
+
+
