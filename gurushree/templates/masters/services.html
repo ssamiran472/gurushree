@@ -16,7 +16,7 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <form id="ServicesForm">
                                 <div class="card-body">
 
@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="card-footer">
 
-                                    <button type="submit" id="SubmitPro" class="btn btn-danger">
+                                    <button type="submit" id="SubmitPro" class="btn btn-info">
                                                 Add Services
                                             </button>
                                 </div>
@@ -196,7 +196,7 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <table class="table table-bordered table-hover" style="width:100%" id="ServicesTable">
                                     <thead>
@@ -287,7 +287,7 @@
                 data: 'id',
                 render: function(data, type, row) {
                     return "<button type='button' class='btn btn-primary btn-sm edit' data-user='" + JSON.stringify(row) + "'><i class='fas fa-edit'></i></button>" +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-pro-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                        '<button type="button" class="btn btn-info btn-sm ml-2 delete" data-pro-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }],

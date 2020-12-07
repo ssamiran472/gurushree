@@ -14,7 +14,7 @@
             <div class="tab-pane fade show active" id="genTypes" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <form id="GenTypeForm">
                                     <div class="row">
@@ -32,7 +32,7 @@
 
                                         </div>
                                         <div class="form-group col-md-3">
-                                            <input type="submit" class="btn btn-danger mt-4" id="submitBtn" value="Add General Type">
+                                            <input type="submit" class="btn btn-info mt-4" id="submitBtn" value="Add General Type">
 
                                         </div>
                                     </div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="GenTypes" width="100%" cellspacing="0">
@@ -69,7 +69,7 @@
             <div class="tab-pane fade" id="generals" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <form id="generaltypeForm">
                                     <div class="row">
@@ -94,7 +94,7 @@
                                             </label>
                                         </div>
                                         <div class="form-group col-md-2">
-                                            <input type="submit" class="btn btn-danger mt-4" id="ggsubmitBtn" value="Add General">
+                                            <input type="submit" class="btn btn-info mt-4" id="ggsubmitBtn" value="Add General">
 
                                         </div>
                                     </div>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" style="width:100%" id="generaltype">
@@ -153,13 +153,13 @@
                     if (data == true)
                         return '<span class="badge badge-success">Active</span>'
                     else
-                        return '<span class="badge badge-danger">Inactive</span>'
+                        return '<span class="badge badge-info">Inactive</span>'
                 }
             }, {
                 data: 'id',
                 render: function(data, type, row) {
                     return '<button type="button" class="btn btn-primary btn-sm editGeneraltype" data-genType=" ' + row.genType + '" data-name=" ' + row.name + '" data-genValue=" ' + row.genValue + '" data-isactive="' + row.isActive + '" data-genType-id=" ' + data + '"><i class="fas fa-edit" > </i></button > ' +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 deleteGeneraltype" data-genType-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                        '<button type="button" class="btn btn-info btn-sm ml-2 deleteGeneraltype" data-genType-id="' + data + '"><i class="fas fa-trash"></i></button>'
                 }
             }],
             language: {
@@ -289,13 +289,13 @@
                     if (data == true)
                         return '<span class="badge badge-success">Active</span>'
                     else
-                        return '<span class="badge badge-danger">Inactive</span>'
+                        return '<span class="badge badge-info">Inactive</span>'
                 }
             }, {
                 data: 'id',
                 render: function(data, type, row) {
                     return '<button type="button" class="btn btn-primary btn-sm edit" data-type=" ' + row.name + '" data-isactive=' + row.isActive + ' data-gen-id=" ' + data + '"><i class="fas fa-edit"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-gen-id=" ' + data + '"><i class="fas fa-trash"></i></button>'
+                        '<button type="button" class="btn btn-info btn-sm ml-2 delete" data-gen-id=" ' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }],

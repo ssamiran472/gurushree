@@ -16,7 +16,7 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <form id="UserForm">
                                     <input type="hidden" name='id' id="UserId">
@@ -147,7 +147,7 @@
                                                         <button type="reset" class=" btn btn-default float-right">
                                          Reset
                                     </button>
-                                                        <button type="submit" class="btn btn-danger float-right mr-2" id="submitUser">
+                                                        <button type="submit" class="btn btn-info float-right mr-2" id="submitUser">
                                                 Add User
                                             </button>
                                                     </div>
@@ -172,7 +172,7 @@
 
                 <div class="row">
                     <div class="col-xl-12 col-md-12 mb-4">
-                        <div class="card border-left-danger shadow h-100 py-2">
+                        <div class="card border-left-info shadow h-100 py-2">
                             <div class="card-body">
                                 <table id="usersTable" style="width:100%" class="table table-bordered table-hover">
                                     <thead>
@@ -278,13 +278,13 @@
                     if (data == true)
                         return '<span class="badge badge-success">Active</span>'
                     else
-                        return '<span class="badge badge-danger">Inactive</span>'
+                        return '<span class="badge badge-info">Inactive</span>'
                 }
             }, {
                 data: 'id',
                 render: function(data, type, row) {
                     return "<button type='button' class='btn btn-primary btn-sm edit' data-user='" + JSON.stringify(row) + "'><i class='fas fa-edit'></i></button>" +
-                        '<button type="button" class="btn btn-danger btn-sm ml-2 delete" data-user-id="' + data + '"><i class="fas fa-trash"></i></button>'
+                        '<button type="button" class="btn btn-info btn-sm ml-2 delete" data-user-id="' + data + '"><i class="fas fa-trash"></i></button>'
 
                 }
             }],
